@@ -35,7 +35,8 @@ changes (see bottom of this file).
 | 3352968264 | Molten Falls [Bloodrun QC] | molten | https://steamcommunity.com/sharedfiles/filedetails/?id=3352968264 |
 | 3463480024 | Serpent's Lair - Overkill Remix | serpentslair | https://steamcommunity.com/sharedfiles/filedetails/?id=3463480024 |
 | 3558261465 | Skybreak | skybreak | https://steamcommunity.com/sharedfiles/filedetails/?id=3558261465 |
-| 3381824293 | — | **not resolvable, "FileNotFound" from Steam — item doesn't exist, drop it from workshop.txt** | https://steamcommunity.com/sharedfiles/filedetails/?id=3381824293 |
+
+Removed from `workshop.txt`: `3381824293` — returned "FileNotFound" from Steam, item doesn't exist.
 
 ## Regenerating this table
 
