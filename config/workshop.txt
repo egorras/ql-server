@@ -1,0 +1,61 @@
+# specify 1 workshop item id per line
+# Titles resolved via Steam Web API (GetPublishedFileDetails) on 2026-09-01 for reference — remove/reorder freely.
+
+# Star Wars Map Pack
+2437765825
+# Nunuk Maps
+569916167
+# Rocket Arena 3 - ra3map20
+551229107
+# Spacemap
+2199915568
+# WARNING: this ID returned "FileNotFound" from Steam — likely deleted/mistyped, won't download. Verify before relying on it.
+3381824293
+# Colvms
+2366250472
+# Aero Space
+582657472
+# Soylent Space - 13 RMX >>ALPHA 3<<
+3250428693
+# Molten Falls [Bloodrun QC]
+3352968264
+# Quake Live Holiday Pack
+539421982
+# Quake Live Extras Pack
+539421606
+# Rocket Arena 3 - ra3map10
+550843679
+# jSMB
+614245167
+# Rocket Arena 3 - ra3map6
+553095317
+# Rocket Arena 3 - ra3map3
+561613916
+# Rocket Arena 3 - ra3map4
+561815150
+# Rocket Arena 3 - ra3map11
+562987267
+# nexdm14 - Soylent Space
+1716977887
+# Skybreak
+3558261465
+# Gothic Space CTF - Quake 3 Arena map
+2119912231
+# Serpent's Lair - Overkill Remix
+3463480024
+# Good L_ck, Yo_'re F_cked - Duel
+2927270324
+# Mile High Club
+2661478200
+# CTF Map
+610695633
+# The Very End of The Longest Yard
+2040858303
+# The Longest Vertical Yard
+2064881853
+# 17plusplus
+607016506
+# q3hexdm3
+852783007
+# q3basketball
+731023357

@@ -1,4 +1,9 @@
 # Be sure to run /reload_access if editing this file while server is running.
 # The server will overwrite your changes on map exit and shutdown
 # 1 entry per line, format: steamid|(mod|admin|ban)
-# ex: 76561198072786081|admin
+76561197971454148|admin
+76561198004681283|admin
+76561198011185765|admin
+76561198015560156|admin
+76561198062673946|admin
+76561198201902597|admin

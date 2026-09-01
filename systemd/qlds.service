@@ -10,6 +10,7 @@ Environment=LD_LIBRARY_PATH=/home/ubuntu/ql-server-data/qlds/linux64
 ExecStart=/usr/local/bin/box64 ./qzeroded.x64 +set dedicated 2 +set fs_basepath /home/ubuntu/ql-server-data/qlds +set logfile 0
 Restart=on-failure
 RestartSec=5
+TimeoutStopSec=5
 
 [Install]
 WantedBy=multi-user.target

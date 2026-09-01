@@ -1,0 +1,28 @@
+name: Deploy
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'config/**'
+      - 'systemd/**'
+      - 'deploy.sh'
+      - 'ci-deploy.sh'
+  workflow_dispatch: {}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          echo "${{ secrets.SSH_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
+
+      # The command sent here is irrelevant — authorized_keys on the server forces
+      # this key to always run ci-deploy.sh (git pull + ./deploy.sh), nothing else.
+      - name: Trigger deploy
+        run: |
+          ssh -i ~/.ssh/id_ed25519 ubuntu@${{ secrets.SSH_HOST }} true
