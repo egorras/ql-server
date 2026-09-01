@@ -1,14 +1,11 @@
 # specify 1 map per line, mapname|factoryid
 # ex: aerowalk|ffa
 # see factories.txt for valid factory id values
-
 # --- everything below is custom, added to match actual play history / workshop.txt ---
-
 # Stock QL maps that exist in pak00.pk3 but aren't in any default mappool*.txt file.
 # No .arena file for either, but both tested crash-free in CA (see config/workshop-maps.md for the testing note).
 terminalheights|ca
 provinggrounds|ca
-
 # Stock QL maps that only exist in the specialized per-gametype pool files (mappool_duel.txt /
 # mappool_ca.txt), copied here since sv_mapPoolFile is set to this general mappool.txt.
 aerowalk|duel
@@ -16,9 +13,10 @@ verticalvengeance|duel
 evolution|ca
 threestory|ca
 windowpain|ca
-
-# Workshop maps (see config/workshop-maps.md for titles/links). aerospace is tested working in CA
-# despite its .arena file only declaring ffa/duel.
+# Workshop maps (see config/workshop-maps.md for titles/links). aerospace is admin-load-only for CA
+# (works fine via /map aerospace ca) — its .arena file declares only ffa/duel, so the engine rejects
+# an |ca line here at pool-build time ("map isn't valid for factory gametype"). Not fixable without
+# overriding the workshop pk3's .arena file, which we haven't been able to do (see workshop-maps.md).
 spacecamp|ca
 cobaltstation|ca
 spacemap|ffa
@@ -34,7 +32,6 @@ swdm17|ffa
 sacellum|ca
 aerospace|ffa
 aerospace|duel
-aerospace|ca
 almostlost|ffa
 almostlost|ca
 arcanecitadel|tdm

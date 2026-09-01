@@ -12,6 +12,14 @@ in CA despite the `.arena` file only listing `ffa duel`). What *is* a hard guara
 have no declared spawn support at all. One of those, **jSMB, crashed the server when force-loaded into CA**
 (no valid CA spawns) — treat any "no `.arena` file" map as FFA/duel-safe only until tested otherwise.
 
+**Note on `mappool.txt` vs direct loading**: the `.arena` "type" field is enforced when the engine builds the pool
+from `mappool.txt` (an `|ca` line for a map whose `.arena` doesn't declare `ca` gets silently skipped at startup,
+logged as `map isn't valid for factory gametype, skipping: <name>`) — but it's *not* enforced for a direct
+`/map <name> <gametype>` load. So aerospace works fine in CA when admin-loaded directly, but can't be made
+selectable via votes/rotation without overriding its `.arena` file inside the workshop pk3, which we tried twice
+(a loose file, then a `baseq3/`-level override pk3 named to sort after `pak00.pk3`) and neither took effect —
+workshop content appears to have unconditionally higher load precedence than anything placed in `baseq3/`.
+
 | Workshop ID | Title | Map name(s) | Declared gametypes | Link |
 |---|---|---|---|---|
 | 539421606 | Quake Live Extras Pack | arenagate, blastradius, bloodrunblue, campgroundsblue, cobaltstation, deathfactory, distantscreams, evilplayground, focalpoint, forgotten, golgothacore, hellsgateredux, powerstation, sacellum | ffa duel tdm ca ft rr dom | https://steamcommunity.com/sharedfiles/filedetails/?id=539421606 |
@@ -23,7 +31,7 @@ have no declared spawn support at all. One of those, **jSMB, crashed the server 
 | 561815150 | Rocket Arena 3 - ra3map4 | ra3map4, ra3map4a, ra3map4b, ra3map4c | ca | https://steamcommunity.com/sharedfiles/filedetails/?id=561815150 |
 | 562987267 | Rocket Arena 3 - ra3map11 | ra3map11, ra3map11a, ra3map11b, ra3map11c | ca | https://steamcommunity.com/sharedfiles/filedetails/?id=562987267 |
 | 569916167 | Nunuk Maps | plutonians, platypus, sparth, chiropterata, distonic_small, chiropteradm, klhights, klcurves_small | actf ad ca ctf dom duel ffa ft har iffa ift infected oneflag quadhog race rr tdm vca | https://steamcommunity.com/sharedfiles/filedetails/?id=569916167 |
-| 582657472 | Aero Space | aerospace | ffa duel (works in ca anyway — tested) | https://steamcommunity.com/sharedfiles/filedetails/?id=582657472 |
+| 582657472 | Aero Space | aerospace | ffa duel — works in ca too via `/map aerospace ca`, but NOT selectable through votes/rotation (engine enforces the .arena file's declared types for mappool.txt entries, and we couldn't override it — see below) | https://steamcommunity.com/sharedfiles/filedetails/?id=582657472 |
 | 607016506 | 17plusplus | 17plusplus | ad ca duel ffa ft har iffa ift infected quadhog rr tdm vca | https://steamcommunity.com/sharedfiles/filedetails/?id=607016506 |
 | 610695633 | CTF Map | asteroid | ctf | https://steamcommunity.com/sharedfiles/filedetails/?id=610695633 |
 | 614245167 | jSMB | jSMB | **no .arena file — CRASHES in ca (tested), ffa/duel only until verified** | https://steamcommunity.com/sharedfiles/filedetails/?id=614245167 |
