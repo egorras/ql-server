@@ -39,6 +39,7 @@ echo "==> Applying config overlay from repo"
 cp "$REPO_DIR/config/server.cfg" "$QLDS_DIR/baseq3/server.cfg"
 cp "$REPO_DIR/config/access.txt" "$QLDS_DIR/baseq3/access.txt"
 cp "$REPO_DIR/config/workshop.txt" "$QLDS_DIR/baseq3/workshop.txt"
+cp "$REPO_DIR/config/mappool.txt" "$QLDS_DIR/baseq3/mappool.txt"
 
 echo "==> Installing systemd unit"
 sudo cp "$REPO_DIR/systemd/qlds.service" /etc/systemd/system/qlds.service

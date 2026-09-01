@@ -5,36 +5,43 @@ title — that's often a pack/author name, not what you type to switch maps). "M
 `/map <name>` or in a callvote (`/cv map <name>`). Regenerate by re-running the inspection script if `workshop.txt`
 changes (see bottom of this file).
 
-| Workshop ID | Title | Map name(s) | Link |
-|---|---|---|---|
-| 539421606 | Quake Live Extras Pack | arenagate, blastradius, bloodrunblue, campgroundsblue, cobaltstation, deathfactory, distantscreams, evilplayground, focalpoint, forgotten, golgothacore, hellsgateredux, powerstation, sacellum | https://steamcommunity.com/sharedfiles/filedetails/?id=539421606 |
-| 539421982 | Quake Live Holiday Pack | silentfright, silentnight, spacecamp, superspace, wintersedge | https://steamcommunity.com/sharedfiles/filedetails/?id=539421982 |
-| 550843679 | Rocket Arena 3 - ra3map10 | ra3map10, ra3map10a, ra3map10b, ra3map10c | https://steamcommunity.com/sharedfiles/filedetails/?id=550843679 |
-| 551229107 | Rocket Arena 3 - ra3map20 | ra3map20, ra3map20a, ra3map20b, ra3map20c | https://steamcommunity.com/sharedfiles/filedetails/?id=551229107 |
-| 553095317 | Rocket Arena 3 - ra3map6 | ra3map6, ra3map6a, ra3map6b, ra3map6c | https://steamcommunity.com/sharedfiles/filedetails/?id=553095317 |
-| 561613916 | Rocket Arena 3 - ra3map3 | ra3map3, ra3map3a, ra3map3b, ra3map3c, ra3map3d | https://steamcommunity.com/sharedfiles/filedetails/?id=561613916 |
-| 561815150 | Rocket Arena 3 - ra3map4 | ra3map4, ra3map4a, ra3map4b, ra3map4c | https://steamcommunity.com/sharedfiles/filedetails/?id=561815150 |
-| 562987267 | Rocket Arena 3 - ra3map11 | ra3map11, ra3map11a, ra3map11b, ra3map11c | https://steamcommunity.com/sharedfiles/filedetails/?id=562987267 |
-| 569916167 | Nunuk Maps | plutonians, platypus, sparth, chiropterata, distonic_small, chiropteradm, klhights, klcurves_small | https://steamcommunity.com/sharedfiles/filedetails/?id=569916167 |
-| 582657472 | Aero Space | aerospace | https://steamcommunity.com/sharedfiles/filedetails/?id=582657472 |
-| 607016506 | 17plusplus | 17plusplus | https://steamcommunity.com/sharedfiles/filedetails/?id=607016506 |
-| 610695633 | CTF Map | asteroid | https://steamcommunity.com/sharedfiles/filedetails/?id=610695633 |
-| 614245167 | jSMB | jSMB | https://steamcommunity.com/sharedfiles/filedetails/?id=614245167 |
-| 731023357 | q3basketball | q3basketball | https://steamcommunity.com/sharedfiles/filedetails/?id=731023357 |
-| 852783007 | q3hexdm3 | q3hexdm3 | https://steamcommunity.com/sharedfiles/filedetails/?id=852783007 |
-| 1716977887 | nexdm14 - Soylent Space | nexdm14 | https://steamcommunity.com/sharedfiles/filedetails/?id=1716977887 |
-| 2040858303 | The Very End of The Longest Yard | 17t6remix | https://steamcommunity.com/sharedfiles/filedetails/?id=2040858303 |
-| 2064881853 | The Longest Vertical Yard | phoenixdm17plus | https://steamcommunity.com/sharedfiles/filedetails/?id=2064881853 |
-| 2119912231 | Gothic Space CTF - Quake 3 Arena map | gothicspace_ctf | https://steamcommunity.com/sharedfiles/filedetails/?id=2119912231 |
-| 2199915568 | Spacemap | spacemap | https://steamcommunity.com/sharedfiles/filedetails/?id=2199915568 |
-| 2366250472 | Colvms | colvms | https://steamcommunity.com/sharedfiles/filedetails/?id=2366250472 |
-| 2437765825 | Star Wars Map Pack | swdm17, swdm17ta, ImperialBase, sw3kl, sw4kl, sw7kl | https://steamcommunity.com/sharedfiles/filedetails/?id=2437765825 |
-| 2661478200 | Mile High Club | q4nctf2 | https://steamcommunity.com/sharedfiles/filedetails/?id=2661478200 |
-| 2927270324 | Good L_ck, Yo_'re F_cked - Duel | q4nd2 | https://steamcommunity.com/sharedfiles/filedetails/?id=2927270324 |
-| 3250428693 | Soylent Space - 13 RMX >>ALPHA 3<< | 13soylent_a3 | https://steamcommunity.com/sharedfiles/filedetails/?id=3250428693 |
-| 3352968264 | Molten Falls [Bloodrun QC] | molten | https://steamcommunity.com/sharedfiles/filedetails/?id=3352968264 |
-| 3463480024 | Serpent's Lair - Overkill Remix | serpentslair | https://steamcommunity.com/sharedfiles/filedetails/?id=3463480024 |
-| 3558261465 | Skybreak | skybreak | https://steamcommunity.com/sharedfiles/filedetails/?id=3558261465 |
+These maps aren't wired into `mappool.txt` (the vote menu), so they're admin-only — load with `/map <name> <gametype>`.
+"Declared gametypes" is what the map's `.arena` file lists as supported — but that field is only enforced by the vote
+menu, not the engine, so it's not a hard guarantee for manual loading either way (see aerospace below, which works
+in CA despite the `.arena` file only listing `ffa duel`). What *is* a hard guarantee: maps with **no `.arena` file**
+have no declared spawn support at all. One of those, **jSMB, crashed the server when force-loaded into CA**
+(no valid CA spawns) — treat any "no `.arena` file" map as FFA/duel-safe only until tested otherwise.
+
+| Workshop ID | Title | Map name(s) | Declared gametypes | Link |
+|---|---|---|---|---|
+| 539421606 | Quake Live Extras Pack | arenagate, blastradius, bloodrunblue, campgroundsblue, cobaltstation, deathfactory, distantscreams, evilplayground, focalpoint, forgotten, golgothacore, hellsgateredux, powerstation, sacellum | ffa duel tdm ca ft rr dom | https://steamcommunity.com/sharedfiles/filedetails/?id=539421606 |
+| 539421982 | Quake Live Holiday Pack | silentfright, silentnight, spacecamp, superspace, wintersedge | ffa duel tdm ca ft rr | https://steamcommunity.com/sharedfiles/filedetails/?id=539421982 |
+| 550843679 | Rocket Arena 3 - ra3map10 | ra3map10, ra3map10a, ra3map10b, ra3map10c | ca | https://steamcommunity.com/sharedfiles/filedetails/?id=550843679 |
+| 551229107 | Rocket Arena 3 - ra3map20 | ra3map20, ra3map20a, ra3map20b, ra3map20c | ca | https://steamcommunity.com/sharedfiles/filedetails/?id=551229107 |
+| 553095317 | Rocket Arena 3 - ra3map6 | ra3map6, ra3map6a, ra3map6b, ra3map6c | ca | https://steamcommunity.com/sharedfiles/filedetails/?id=553095317 |
+| 561613916 | Rocket Arena 3 - ra3map3 | ra3map3, ra3map3a, ra3map3b, ra3map3c, ra3map3d | ca | https://steamcommunity.com/sharedfiles/filedetails/?id=561613916 |
+| 561815150 | Rocket Arena 3 - ra3map4 | ra3map4, ra3map4a, ra3map4b, ra3map4c | ca | https://steamcommunity.com/sharedfiles/filedetails/?id=561815150 |
+| 562987267 | Rocket Arena 3 - ra3map11 | ra3map11, ra3map11a, ra3map11b, ra3map11c | ca | https://steamcommunity.com/sharedfiles/filedetails/?id=562987267 |
+| 569916167 | Nunuk Maps | plutonians, platypus, sparth, chiropterata, distonic_small, chiropteradm, klhights, klcurves_small | actf ad ca ctf dom duel ffa ft har iffa ift infected oneflag quadhog race rr tdm vca | https://steamcommunity.com/sharedfiles/filedetails/?id=569916167 |
+| 582657472 | Aero Space | aerospace | ffa duel (works in ca anyway — tested) | https://steamcommunity.com/sharedfiles/filedetails/?id=582657472 |
+| 607016506 | 17plusplus | 17plusplus | ad ca duel ffa ft har iffa ift infected quadhog rr tdm vca | https://steamcommunity.com/sharedfiles/filedetails/?id=607016506 |
+| 610695633 | CTF Map | asteroid | ctf | https://steamcommunity.com/sharedfiles/filedetails/?id=610695633 |
+| 614245167 | jSMB | jSMB | **no .arena file — CRASHES in ca (tested), ffa/duel only until verified** | https://steamcommunity.com/sharedfiles/filedetails/?id=614245167 |
+| 731023357 | q3basketball | q3basketball | ffa team | https://steamcommunity.com/sharedfiles/filedetails/?id=731023357 |
+| 852783007 | q3hexdm3 | q3hexdm3 | ca | https://steamcommunity.com/sharedfiles/filedetails/?id=852783007 |
+| 1716977887 | nexdm14 - Soylent Space | nexdm14 | ffa duel tdm ca ft rr | https://steamcommunity.com/sharedfiles/filedetails/?id=1716977887 |
+| 2040858303 | The Very End of The Longest Yard | 17t6remix | no .arena file — untested outside ffa/duel | https://steamcommunity.com/sharedfiles/filedetails/?id=2040858303 |
+| 2064881853 | The Longest Vertical Yard | phoenixdm17plus | no .arena file — untested outside ffa/duel | https://steamcommunity.com/sharedfiles/filedetails/?id=2064881853 |
+| 2119912231 | Gothic Space CTF - Quake 3 Arena map | gothicspace_ctf | ctf | https://steamcommunity.com/sharedfiles/filedetails/?id=2119912231 |
+| 2199915568 | Spacemap | spacemap | ffa tourney | https://steamcommunity.com/sharedfiles/filedetails/?id=2199915568 |
+| 2366250472 | Colvms | colvms | ffa duel tdm ca ft rr | https://steamcommunity.com/sharedfiles/filedetails/?id=2366250472 |
+| 2437765825 | Star Wars Map Pack | swdm17, swdm17ta, ImperialBase, sw3kl, sw4kl, sw7kl | ffa (both declared maps) | https://steamcommunity.com/sharedfiles/filedetails/?id=2437765825 |
+| 2661478200 | Mile High Club | q4nctf2 | no .arena file — untested outside ffa/duel | https://steamcommunity.com/sharedfiles/filedetails/?id=2661478200 |
+| 2927270324 | Good L_ck, Yo_'re F_cked - Duel | q4nd2 | ffa duel rr tdm ca | https://steamcommunity.com/sharedfiles/filedetails/?id=2927270324 |
+| 3250428693 | Soylent Space - 13 RMX >>ALPHA 3<< | 13soylent_a3 | ffa duel tdm ca ft rr | https://steamcommunity.com/sharedfiles/filedetails/?id=3250428693 |
+| 3352968264 | Molten Falls [Bloodrun QC] | molten | ffa duel tdm ca ft rr | https://steamcommunity.com/sharedfiles/filedetails/?id=3352968264 |
+| 3463480024 | Serpent's Lair - Overkill Remix | serpentslair | ffa duel tdm ca ft rr | https://steamcommunity.com/sharedfiles/filedetails/?id=3463480024 |
+| 3558261465 | Skybreak | skybreak | no .arena file — untested outside ffa/duel | https://steamcommunity.com/sharedfiles/filedetails/?id=3558261465 |
 
 Removed from `workshop.txt`: `3381824293` — returned "FileNotFound" from Steam, item doesn't exist.
 
