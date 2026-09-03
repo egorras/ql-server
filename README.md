@@ -40,7 +40,7 @@ journalctl -u qlds -f
 
 ## Known limitation: Steam Workshop maps
 
-The server authenticates to Steam anonymously (via SteamCMD), which is enough to download the QLDS binaries but *not* enough for the running server's own Steam session (`SteamAPI_Init` fails, `ISteamUGC` is null) — so Workshop map downloads don't work yet. The bundled default map pool works fine. Revisit this later if you want custom maps.
+The server authenticates to Steam anonymously (via SteamCMD), which is enough to download the QLDS binaries but *not* enough for the running server's own Steam session (`SteamAPI_Init` fails, `ISteamUGC` is null) — so it can't freshly sync Workshop content itself; it just trusts whatever's already on disk under `steamapps/workshop/content/282440/<id>/` as "in cache". That's fine for items already subscribed once (see `config/workshop.txt`), but it also means **there's no download path of any kind to a connecting client** for content the server has that a client doesn't (this build has zero download-related cvars — checked via `cvarlist download`). Steam Workshop sync (handled by each *player's* own Steam client, not this server) is the only distribution channel. See `config/workshop-maps.md` for the details and gotchas (e.g. never overwrite an existing Workshop item's pk3 locally — breaks it for every player whose client already has the original cached) and `workshop-publish/` for publishing a custom/fixed map as a new Workshop item.
 
 ## Firewall
 
