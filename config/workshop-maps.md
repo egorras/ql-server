@@ -15,10 +15,14 @@ have no declared spawn support at all. One of those, **jSMB, crashed the server 
 **Note on `mappool.txt` vs direct loading**: the `.arena` "type" field is enforced when the engine builds the pool
 from `mappool.txt` (an `|ca` line for a map whose `.arena` doesn't declare `ca` gets silently skipped at startup,
 logged as `map isn't valid for factory gametype, skipping: <name>`) — but it's *not* enforced for a direct
-`/map <name> <gametype>` load. So aerospace works fine in CA when admin-loaded directly, but can't be made
-selectable via votes/rotation without overriding its `.arena` file inside the workshop pk3, which we tried twice
-(a loose file, then a `baseq3/`-level override pk3 named to sort after `pak00.pk3`) and neither took effect —
-workshop content appears to have unconditionally higher load precedence than anything placed in `baseq3/`.
+`/map <name> <gametype>` load. Overriding a workshop map's `.arena` by placing a loose file or a `baseq3/`-level
+pk3 doesn't work — workshop content has unconditionally higher load precedence than anything in `baseq3/`. What
+*does* work: replacing the actual pk3 under `steamapps/workshop/content/282440/<id>/` directly. The server here
+never really re-syncs workshop content from Steam (`ISteamUGC is NULL` under box64 — it just trusts whatever's
+already on disk as "in cache"), so a swapped-in pk3 sticks. `deploy.sh` re-applies any pk3s from this repo's
+`maps/<workshop id>/` on every deploy, so the fix survives a `--update` that wipes and reinstalls `$QLDS_DIR`.
+aerospace (582657472) uses this: `maps/582657472/aerospace.pk3` is a CA-patched build whose `.arena` declares
+`ffa duel ca`, so it's now in `mappool.txt` as a normal `|ca` entry too.
 
 | Workshop ID | Title | Map name(s) | Declared gametypes | Link |
 |---|---|---|---|---|
@@ -31,7 +35,7 @@ workshop content appears to have unconditionally higher load precedence than any
 | 561815150 | Rocket Arena 3 - ra3map4 | ra3map4, ra3map4a, ra3map4b, ra3map4c | ca | https://steamcommunity.com/sharedfiles/filedetails/?id=561815150 |
 | 562987267 | Rocket Arena 3 - ra3map11 | ra3map11, ra3map11a, ra3map11b, ra3map11c | ca | https://steamcommunity.com/sharedfiles/filedetails/?id=562987267 |
 | 569916167 | Nunuk Maps | plutonians, platypus, sparth, chiropterata, distonic_small, chiropteradm, klhights, klcurves_small | actf ad ca ctf dom duel ffa ft har iffa ift infected oneflag quadhog race rr tdm vca | https://steamcommunity.com/sharedfiles/filedetails/?id=569916167 |
-| 582657472 | Aero Space | aerospace | ffa duel — works in ca too via `/map aerospace ca`, but NOT selectable through votes/rotation (engine enforces the .arena file's declared types for mappool.txt entries, and we couldn't override it — see below) | https://steamcommunity.com/sharedfiles/filedetails/?id=582657472 |
+| 582657472 | Aero Space | aerospace | ffa duel ca — `.pk3` replaced with a CA-patched build (`maps/582657472/aerospace.pk3` in this repo, applied by `deploy.sh`), so it's selectable through votes/rotation now too | https://steamcommunity.com/sharedfiles/filedetails/?id=582657472 |
 | 607016506 | 17plusplus | 17plusplus | ad ca duel ffa ft har iffa ift infected quadhog rr tdm vca | https://steamcommunity.com/sharedfiles/filedetails/?id=607016506 |
 | 610695633 | CTF Map | asteroid | ctf | https://steamcommunity.com/sharedfiles/filedetails/?id=610695633 |
 | 614245167 | jSMB | jSMB | **no .arena file — CRASHES in ca (tested), ffa/duel only until verified** | https://steamcommunity.com/sharedfiles/filedetails/?id=614245167 |

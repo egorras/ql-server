@@ -13,10 +13,7 @@ verticalvengeance|duel
 evolution|ca
 threestory|ca
 windowpain|ca
-# Workshop maps (see config/workshop-maps.md for titles/links). aerospace is admin-load-only for CA
-# (works fine via /map aerospace ca) — its .arena file declares only ffa/duel, so the engine rejects
-# an |ca line here at pool-build time ("map isn't valid for factory gametype"). Not fixable without
-# overriding the workshop pk3's .arena file, which we haven't been able to do (see workshop-maps.md).
+# Workshop maps (see config/workshop-maps.md for titles/links).
 spacecamp|ca
 cobaltstation|ca
 spacemap|ffa
@@ -32,6 +29,7 @@ swdm17|ffa
 sacellum|ca
 aerospace|ffa
 aerospace|duel
+aerospace|ca
 almostlost|ffa
 almostlost|ca
 arcanecitadel|tdm

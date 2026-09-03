@@ -41,6 +41,22 @@ cp "$REPO_DIR/config/access.txt" "$QLDS_DIR/baseq3/access.txt"
 cp "$REPO_DIR/config/workshop.txt" "$QLDS_DIR/baseq3/workshop.txt"
 cp "$REPO_DIR/config/mappool.txt" "$QLDS_DIR/baseq3/mappool.txt"
 
+echo "==> Applying map overrides from repo (maps/<workshop id>/*.pk3)"
+# The engine never actually re-syncs workshop content here (ISteamUGC is NULL under
+# box64 — see startup log "Skipping workshop, ISteamUGC is NULL"), it just uses
+# whatever .pk3 already sits in steamapps/workshop/content/282440/<id>/. So a fixed
+# pk3 dropped in place survives restarts, but a fresh --update (which wipes $QLDS_DIR)
+# would lose it without this step re-applying it from the repo.
+if [ -d "$REPO_DIR/maps" ]; then
+  for id_dir in "$REPO_DIR"/maps/*/; do
+    [ -d "$id_dir" ] || continue
+    id="$(basename "$id_dir")"
+    dest="$QLDS_DIR/steamapps/workshop/content/282440/$id"
+    mkdir -p "$dest"
+    cp "$id_dir"*.pk3 "$dest/"
+  done
+fi
+
 echo "==> Installing systemd unit"
 sudo cp "$REPO_DIR/systemd/qlds.service" /etc/systemd/system/qlds.service
 sudo systemctl daemon-reload
