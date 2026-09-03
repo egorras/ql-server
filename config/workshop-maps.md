@@ -15,14 +15,27 @@ have no declared spawn support at all. One of those, **jSMB, crashed the server 
 **Note on `mappool.txt` vs direct loading**: the `.arena` "type" field is enforced when the engine builds the pool
 from `mappool.txt` (an `|ca` line for a map whose `.arena` doesn't declare `ca` gets silently skipped at startup,
 logged as `map isn't valid for factory gametype, skipping: <name>`) — but it's *not* enforced for a direct
-`/map <name> <gametype>` load. Overriding a workshop map's `.arena` by placing a loose file or a `baseq3/`-level
-pk3 doesn't work — workshop content has unconditionally higher load precedence than anything in `baseq3/`. What
-*does* work: replacing the actual pk3 under `steamapps/workshop/content/282440/<id>/` directly. The server here
-never really re-syncs workshop content from Steam (`ISteamUGC is NULL` under box64 — it just trusts whatever's
-already on disk as "in cache"), so a swapped-in pk3 sticks. `deploy.sh` re-applies any pk3s from this repo's
-`maps/<workshop id>/` on every deploy, so the fix survives a `--update` that wipes and reinstalls `$QLDS_DIR`.
-aerospace (582657472) uses this: `maps/582657472/aerospace.pk3` is a CA-patched build whose `.arena` declares
-`ffa duel ca`, so it's now in `mappool.txt` as a normal `|ca` entry too.
+`/map <name> <gametype>` load.
+
+**Fixing a workshop map's `.arena` (e.g. adding `ca` support): do NOT overwrite the workshop item's own pk3.**
+We tried that for aerospace (582657472) — replacing the file under
+`steamapps/workshop/content/282440/582657472/aerospace.pk3` directly *does* work from the dedicated server's own
+point of view (the engine here never really re-syncs workshop content from Steam — `ISteamUGC is NULL` under
+box64, it just trusts whatever's on disk as "in cache" — so a swapped-in pk3 loads fine locally, no crash). But
+every real player's Quake Live client has that same workshop item already cached, synced by their own working
+Steam client against the *actual* published item — a byte-different file at that identity fails their pure-server
+checksum check and they get `couldn't load map aerospace.bsp` on connect/map-change. This broke the server for
+everyone the first time we shipped it. Also, per above, overriding a workshop map's `.arena` by placing a loose
+file or a `baseq3/`-level pk3 *of the same map name* doesn't work either way — workshop content has unconditionally
+higher load precedence than anything in `baseq3/`.
+
+**What actually works**: rebuild the map as a *new, distinctly-named* pk3 (renaming the `.bsp`/`.aas`/`.arena`/
+`.shader`/levelshot files so nothing collides with the real workshop item's identity) and ship it as a normal
+`baseq3/`-level custom map — no Steam identity to conflict with, so every client just downloads it fresh from the
+server like any other custom map. `deploy.sh` copies `maps/baseq3/*.pk3` from this repo straight into
+`$QLDS_DIR/baseq3/` on every deploy. aerospace_ca is the first case: `maps/baseq3/aerospace_ca.pk3` is a rebuild
+of aerospace (582657472) with `.arena` `map "aerospace_ca"` declaring `ffa duel ca`, wired into `mappool.txt` as
+`aerospace_ca|ca`. The original aerospace (582657472) is untouched and still admin-load-only for `ffa`/`duel`.
 
 | Workshop ID | Title | Map name(s) | Declared gametypes | Link |
 |---|---|---|---|---|
@@ -35,7 +48,8 @@ aerospace (582657472) uses this: `maps/582657472/aerospace.pk3` is a CA-patched 
 | 561815150 | Rocket Arena 3 - ra3map4 | ra3map4, ra3map4a, ra3map4b, ra3map4c | ca | https://steamcommunity.com/sharedfiles/filedetails/?id=561815150 |
 | 562987267 | Rocket Arena 3 - ra3map11 | ra3map11, ra3map11a, ra3map11b, ra3map11c | ca | https://steamcommunity.com/sharedfiles/filedetails/?id=562987267 |
 | 569916167 | Nunuk Maps | plutonians, platypus, sparth, chiropterata, distonic_small, chiropteradm, klhights, klcurves_small | actf ad ca ctf dom duel ffa ft har iffa ift infected oneflag quadhog race rr tdm vca | https://steamcommunity.com/sharedfiles/filedetails/?id=569916167 |
-| 582657472 | Aero Space | aerospace | ffa duel ca — `.pk3` replaced with a CA-patched build (`maps/582657472/aerospace.pk3` in this repo, applied by `deploy.sh`), so it's selectable through votes/rotation now too | https://steamcommunity.com/sharedfiles/filedetails/?id=582657472 |
+| 582657472 | Aero Space | aerospace | ffa duel — unmodified, admin-load-only (see `aerospace_ca` below for the CA-capable rebuild) | https://steamcommunity.com/sharedfiles/filedetails/?id=582657472 |
+| — (`maps/baseq3/aerospace_ca.pk3`) | Aero Space (CA rebuild) | aerospace_ca | ffa duel ca — in `mappool.txt` as `aerospace_ca\|ca` | not a workshop item; see note above |
 | 607016506 | 17plusplus | 17plusplus | ad ca duel ffa ft har iffa ift infected quadhog rr tdm vca | https://steamcommunity.com/sharedfiles/filedetails/?id=607016506 |
 | 610695633 | CTF Map | asteroid | ctf | https://steamcommunity.com/sharedfiles/filedetails/?id=610695633 |
 | 614245167 | jSMB | jSMB | **no .arena file — CRASHES in ca (tested), ffa/duel only until verified** | https://steamcommunity.com/sharedfiles/filedetails/?id=614245167 |

@@ -41,20 +41,17 @@ cp "$REPO_DIR/config/access.txt" "$QLDS_DIR/baseq3/access.txt"
 cp "$REPO_DIR/config/workshop.txt" "$QLDS_DIR/baseq3/workshop.txt"
 cp "$REPO_DIR/config/mappool.txt" "$QLDS_DIR/baseq3/mappool.txt"
 
-echo "==> Applying map overrides from repo (maps/<workshop id>/*.pk3)"
-# The engine never actually re-syncs workshop content here (ISteamUGC is NULL under
-# box64 — see startup log "Skipping workshop, ISteamUGC is NULL"), it just uses
-# whatever .pk3 already sits in steamapps/workshop/content/282440/<id>/. So a fixed
-# pk3 dropped in place survives restarts, but a fresh --update (which wipes $QLDS_DIR)
-# would lose it without this step re-applying it from the repo.
-if [ -d "$REPO_DIR/maps" ]; then
-  for id_dir in "$REPO_DIR"/maps/*/; do
-    [ -d "$id_dir" ] || continue
-    id="$(basename "$id_dir")"
-    dest="$QLDS_DIR/steamapps/workshop/content/282440/$id"
-    mkdir -p "$dest"
-    cp "$id_dir"*.pk3 "$dest/"
-  done
+echo "==> Applying custom map pk3s from repo (maps/baseq3/*.pk3)"
+# Deliberately NOT under steamapps/workshop/content/282440/<id>/: overwriting an actual
+# Steam Workshop item's pk3 there breaks every player, because their client already has
+# the real item cached (synced by Steam itself) under a matching filename/ID, and a
+# byte-different file at that same identity fails pure-server checksum validation client
+# side ("couldn't load map <x>.bsp"). A pk3 here instead is a normal baseq3-level custom
+# map with no Steam identity to collide with — e.g. aerospace_ca.pk3 is a CA-patched
+# rebuild of workshop map "aerospace" (582657472), renamed throughout so it doesn't
+# collide with that real item (see config/workshop-maps.md).
+if [ -d "$REPO_DIR/maps/baseq3" ]; then
+  cp "$REPO_DIR"/maps/baseq3/*.pk3 "$QLDS_DIR/baseq3/"
 fi
 
 echo "==> Installing systemd unit"
