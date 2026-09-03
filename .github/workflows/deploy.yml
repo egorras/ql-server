@@ -9,6 +9,7 @@ on:
       - 'maps/**'
       - 'deploy.sh'
       - 'ci-deploy.sh'
+      - '!**/*.md'
   workflow_dispatch: {}
 
 jobs:
