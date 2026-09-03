@@ -1,4 +1,33 @@
-# spacekeep (heroskeep wall-removal edit) — status: blocked on a BSP leak
+# spacekeep (heroskeep wall-removal edit) — status: local test build ready
+
+## 2026-09-03: stable rollback and marked hall-window pass
+
+The earlier edit treated the decorative dead ends and central corridor walls as if they
+were directly adjacent. They are actually separated by two 72-unit exterior gaps. Removing
+either cap therefore exposed an interior leaf to the void.
+
+After the broad-deck experiment damaged unrelated geometry, the current generator
+(`build_spacekeep_source.py`) was returned to a stock-first, tightly scoped approach:
+
+- restores all stock geometry outside three explicitly checked travel volumes;
+- opens the two original side archways and removes the thin flame/trim and clip remnants
+  that crossed their centers;
+- spans both exterior gaps with solid-sided, solid-roofed passages so the player cannot
+  see or step into the void beside an arch;
+- cuts a clean 128-by-344 jump window at the location marked in
+  `build/hall_section_original.png`, replacing the straddling decompiled wall courses with
+  a thick sealed frame;
+- adds a new south-room jump pad and moves the stock far-room pad's target so both throws
+  pass through the window and land in the opposite room;
+- removes the five advertisement entities before compilation;
+- translates the gothic palette to the stock Cobalt Station material family (pewter,
+  blue metal, cobalt chrome, dark clang floors) and swaps the toxic sky for `qznebula3`;
+- adds cool-blue bridge lighting, compiles VIS and bounced lightmaps, and regenerates AAS.
+
+`q3map2 -leaktest` now completes without a `.lin` pointfile. The build also has static
+convex-feasibility checks that reject even sub-grid collision slivers in all three openings,
+plus player-hull trajectory and landing checks for both jump directions. It produces
+`build/spacekeep_test.pk3`.
 
 Attempt to turn the stock map `heroskeep` into a more open "spacekeep" by removing/widening
 the walls between its two big symmetric side chambers and the central corridor, for more open

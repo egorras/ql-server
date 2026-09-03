@@ -54,6 +54,7 @@ realmofsteelrats|ca
 repent|ca
 retribution|ca
 servitude|ca
+spacekeep|ca
 terminatria|ca
 theedge|ca
 theoldendomain|ca

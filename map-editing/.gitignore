@@ -1,0 +1,7 @@
+/build/
+/reference/
+/src/maps/heroskeep.bsp
+/src/maps/heroskeep_converted.map
+/bspc.log
+/bspc.log.old
+__pycache__/

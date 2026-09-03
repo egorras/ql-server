@@ -33,6 +33,15 @@ STEAMCMD=/c/path/to/steamcmd.exe STEAM_USER=<your_steam_username> \
 The script pulls the pk3's first top-level `levelshots/*.jpg` as the preview image
 automatically — no separate preview file needed.
 
+**Preview must be under 1MB.** SteamCMD silently fails workshop_build_item with
+`Size limit exceeded for preview file ... File must be less than 1 MB` if it isn't — this bit
+the spacekeep publish, whose levelshot was a raw stock `pak00.pk3` JPEG (~1.6MB) copied over from
+`heroskeep`. The content upload itself still succeeds and the item gets created, so a failed
+preview upload leaves a real (but preview-less/incomplete) item behind — re-run against that
+item's published_file_id with a resized preview rather than creating a second item. Fix: downscale/
+recompress the jpg (e.g. Pillow `Image.thumbnail((1024,1024))` + `quality=85`) before it goes into
+the pk3, or swap the pk3's levelshot for the resized copy before publishing.
+
 ## Why not just overwrite an existing Workshop item's pk3 locally?
 
 Don't. See `config/workshop-maps.md` — every player's client already has the *real*

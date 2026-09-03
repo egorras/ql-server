@@ -48,6 +48,12 @@ pathing, not just hand them to clients), and it authenticates as an anonymous ga
 be on anyone's friends list. Friends Only got `EResult 15 (Access Denied)` for the server every time; Public is
 the only tier that works. The original aerospace (582657472) is untouched and still admin-load-only for `ffa`/`duel`.
 
+Spacekeep (3795132298) follows the same pattern against `heroskeep`: rebuilt via `map-editing/`
+(see `map-editing/README.md` and `spacekeep-notes.md`), `.bsp`/`.aas`/`.arena`/levelshot all renamed
+to `spacekeep` so it shares no identity with the stock `heroskeep` item, `.arena` declares
+`ffa duel tdm ca ft rr`, wired into `mappool.txt` as `spacekeep|ca`. Must be set **Public** on the
+Workshop page (same reasoning as aerospace_ca above) before the dedicated server can pull it.
+
 **Gotcha when a player subscribes**: if you (or a player) click Subscribe on a `workshop-publish/`-created item
 *before* it's set Public, Steam silently doesn't register the subscription locally — `<steam>\userdata\<id>\ugc\
 282440_subscriptions.vdf` just won't have an entry for it, `time_last_updated` won't bump, and neither the offline
@@ -89,6 +95,7 @@ subscription state — the client only fetches missing content as part of a real
 | 3352968264 | Molten Falls [Bloodrun QC] | molten | ffa duel tdm ca ft rr | https://steamcommunity.com/sharedfiles/filedetails/?id=3352968264 |
 | 3463480024 | Serpent's Lair - Overkill Remix | serpentslair | ffa duel tdm ca ft rr | https://steamcommunity.com/sharedfiles/filedetails/?id=3463480024 |
 | 3558261465 | Skybreak | skybreak | no .arena file — untested outside ffa/duel | https://steamcommunity.com/sharedfiles/filedetails/?id=3558261465 |
+| 3795132298 | Spacekeep | spacekeep | ffa duel tdm ca ft rr — in `mappool.txt` as `spacekeep\|ca` | https://steamcommunity.com/sharedfiles/filedetails/?id=3795132298 |
 
 Removed from `workshop.txt`: `3381824293` — returned "FileNotFound" from Steam, item doesn't exist.
 
