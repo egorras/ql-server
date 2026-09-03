@@ -41,10 +41,21 @@ in this repo wraps the SteamCMD steps) and add its ID to `workshop.txt` like any
 is the *only* content-delivery path this engine has, so that's what has to carry it. aerospace_ca
 (3795014965, published by monkeydyoger) is a rebuild of aerospace (582657472) — `.bsp`/`.aas`/`.arena`/`.shader`/
 levelshots all renamed so it shares no identity with the original — with `.arena` `map "aerospace_ca"` declaring
-`ffa duel ca`, wired into `mappool.txt` as `aerospace_ca|ca`. **Currently published private** — visibility needs to
-be at least Friends Only for the access-list'd players to actually be able to subscribe/download it; check
-https://steamcommunity.com/sharedfiles/filedetails/?id=3795014965. The original aerospace (582657472) is untouched
-and still admin-load-only for `ffa`/`duel`.
+`ffa duel ca`, wired into `mappool.txt` as `aerospace_ca|ca`. **Published Public**
+(https://steamcommunity.com/sharedfiles/filedetails/?id=3795014965) — required, not just Friends Only: the
+*dedicated server itself* has to download the item (it needs the actual map files locally to run collision/spawn/
+pathing, not just hand them to clients), and it authenticates as an anonymous game-server account that can never
+be on anyone's friends list. Friends Only got `EResult 15 (Access Denied)` for the server every time; Public is
+the only tier that works. The original aerospace (582657472) is untouched and still admin-load-only for `ffa`/`duel`.
+
+**Gotcha when a player subscribes**: if you (or a player) click Subscribe on a `workshop-publish/`-created item
+*before* it's set Public, Steam silently doesn't register the subscription locally — `<steam>\userdata\<id>\ugc\
+282440_subscriptions.vdf` just won't have an entry for it, `time_last_updated` won't bump, and neither the offline
+map list nor a real server connect will ever pull the content, no error shown. Fix: once the item is Public,
+**unsubscribe then resubscribe** (a no-op click on an already-"subscribed" item doesn't force a resync) and fully
+restart Steam. Also: an offline/bot match won't trigger a fresh workshop download at all regardless of
+subscription state — the client only fetches missing content as part of a real connect-to-server handshake, so
+"test it in an offline game first" isn't a valid way to check whether a new workshop map downloaded.
 
 | Workshop ID | Title | Map name(s) | Declared gametypes | Link |
 |---|---|---|---|---|
