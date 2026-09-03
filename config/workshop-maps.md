@@ -74,6 +74,7 @@ subscription state — the client only fetches missing content as part of a real
 | 610695633 | CTF Map | asteroid | ctf | https://steamcommunity.com/sharedfiles/filedetails/?id=610695633 |
 | 614245167 | jSMB | jSMB | **no .arena file — CRASHES in ca (tested), ffa/duel only until verified** | https://steamcommunity.com/sharedfiles/filedetails/?id=614245167 |
 | 731023357 | q3basketball | q3basketball | ffa team | https://steamcommunity.com/sharedfiles/filedetails/?id=731023357 |
+| 741290532 | Dreamscape - Extended | 13dream_xt (per item description; start with `\map 13dream_xt ctf`) — not yet downloaded to the server, so not confirmed against the actual `.pk3`/`.arena` | description claims "ALL types!" but unverified — treat as ffa/duel/ctf-safe only until inspected (see regeneration note above) | https://steamcommunity.com/sharedfiles/filedetails/?id=741290532 |
 | 852783007 | q3hexdm3 | q3hexdm3 | ca | https://steamcommunity.com/sharedfiles/filedetails/?id=852783007 |
 | 1716977887 | nexdm14 - Soylent Space | nexdm14 | ffa duel tdm ca ft rr | https://steamcommunity.com/sharedfiles/filedetails/?id=1716977887 |
 | 2040858303 | The Very End of The Longest Yard | 17t6remix | no .arena file — untested outside ffa/duel | https://steamcommunity.com/sharedfiles/filedetails/?id=2040858303 |
